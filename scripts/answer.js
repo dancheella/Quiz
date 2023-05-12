@@ -125,7 +125,7 @@
       }
     },
     history() {
-      const backButton = document.querySelector('#result');
+      const backButton = document.querySelector('#results');
       backButton.addEventListener('click', () => {
         history.back();
       });

@@ -73,25 +73,3 @@
   display: grid;
   place-content: center;
 }
-
-.result-page {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.result-page a {
-  font-size: 17px;
-  line-height: 20px;
-  color: #6933DC;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-.result-page a:hover {
-  text-decoration: underline;
-}
-
-.result-page a img {
-  margin-left: 13px;
-}
