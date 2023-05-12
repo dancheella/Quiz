@@ -6,7 +6,7 @@
         '/' + url.searchParams.get('total');
 
       document.getElementById('results').onclick = function () {
-        location.href = 'answer.html?testId=' + url.searchParams.get('testId') + '&results=' + url.searchParams.get('results');
+        location.href = 'answer.html' + location.search;
       };
     }
   }

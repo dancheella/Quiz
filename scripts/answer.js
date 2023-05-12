@@ -6,21 +6,26 @@
     currentQuestionIndex: 1,
     questionTitleElement: null,
     results: null,
-    // answerInfo: null,
+    answerInfo: null,
     init() {
       const url = new URL(location.href);
       const testId = url.searchParams.get('testId');
+      const name = url.searchParams.get('name');
+      const lastName = url.searchParams.get('lastName');
+      const email = url.searchParams.get('email');
 
       if (testId) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'https://testologia.site/get-quiz?id=' + testId, false);
         xhr.send();
+
         if (xhr.status === 200 && xhr.responseText) {
           try {
             this.quiz = JSON.parse(xhr.responseText);
           } catch (e) {
             location.href = 'index.html';
           }
+          this.answerInfo = document.getElementById('answer-info').innerHTML = name + ' ' + lastName + ', ' + email;
         } else {
           location.href = 'index.html';
         }
@@ -50,7 +55,6 @@
     },
     showQuestion() {
       document.getElementById('pre-title').innerText = this.quiz.name;
-      // this.fields = document.getElementById('answer-info').innerHTML = name + ' ' + lastName + ', ' + email;
 
       this.optionsElement = document.getElementById('answers');
 

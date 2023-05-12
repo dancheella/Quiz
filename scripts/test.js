@@ -230,7 +230,7 @@
             answersCorrect.push(right.chosenAnswerId);
           })
 
-          location.href = 'result.html?score=' + result.score + '&total=' + result.total + '&testId=' + url.searchParams.get('id') + '&results=' + answersCorrect;
+          location.href = 'result.html' + location.search + '&score=' + result.score + '&total=' + result.total + '&testId=' + url.searchParams.get('id') + '&results=' + answersCorrect;
         }
       } else {
         location.href = 'index.html';
