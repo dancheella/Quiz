@@ -41,6 +41,10 @@
       this.nextButtonElement.onclick = this.move.bind(this, 'next');
       this.passButtonElement = document.getElementById('pass');
       this.passButtonElement.onclick = this.move.bind(this, 'pass');
+
+      this.passImage = document.getElementById('pass-image');
+      this.passQuestionElements = document.querySelector('.pass-question');
+
       document.getElementById('pre-title').innerText = this.quiz.name;
 
       this.prevButtonElement = document.getElementById('prev');
@@ -85,11 +89,13 @@
         + ':</span> ' + activeQuestion.question;
 
       this.optionsElement.innerHTML = '';
+
       const that = this;
       const chosenOption = this.userResult.find(item => item.questionId === activeQuestion.id);
+
       activeQuestion.answers.forEach(answer => {
         const optionElement = document.createElement('div');
-        optionElement.className = 'test-question-option';
+        optionElement.className = 'common-question-option';
 
         const inputId = 'answer-' + answer.id;
         const inputElement = document.createElement('input');
@@ -114,12 +120,15 @@
         optionElement.appendChild(labelElement);
 
         this.optionsElement.appendChild(optionElement);
-
       });
+
       if (chosenOption && chosenOption.chosenAnswerId) {
         this.nextButtonElement.removeAttribute('disabled');
       } else {
         this.nextButtonElement.setAttribute('disabled', 'disabled');
+        this.passButtonElement.classList.remove('disabled');
+        this.passImage.src = "images/small-arrow.png";
+        this.passQuestionElements.style.cursor = 'default';
       }
 
       if (this.currentQuestionIndex === this.quiz.questions.length) {
@@ -135,6 +144,9 @@
     },
     chooseAnswer() {
       this.nextButtonElement.removeAttribute('disabled');
+      this.passButtonElement.classList.add('disabled');
+      this.passImage.src = "images/small-arrow-grey.png";
+      this.passQuestionElements.style.cursor = 'not-allowed';
     },
     move(action) {
       const activeQuestion = this.quiz.questions[this.currentQuestionIndex - 1];
@@ -182,7 +194,7 @@
         } else if (currentItemIndex < this.currentQuestionIndex)  {
           item.classList.add('complete');
         }
-      })
+      });
 
       this.showQuestion();
     },
@@ -212,7 +224,13 @@
         }
         if (result) {
           // console.log(result);
-          location.href = 'result.html?score=' + result.score + '&total=' + result.total;
+
+          const answersCorrect = [];
+          this.userResult.forEach((right) => {
+            answersCorrect.push(right.chosenAnswerId);
+          })
+
+          location.href = 'result.html?score=' + result.score + '&total=' + result.total + '&testId=' + url.searchParams.get('id') + '&results=' + answersCorrect;
         }
       } else {
         location.href = 'index.html';
