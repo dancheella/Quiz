@@ -1,1 +1,1 @@
-https://dancheella.github.io/Quiz/
+SPA application Quiz on pure JavaScript
