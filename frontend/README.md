@@ -1,0 +1,1 @@
+SPA application Quiz on pure JavaScript
