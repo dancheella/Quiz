@@ -133,7 +133,7 @@ export class Test {
     } else {
       this.nextButtonElement.setAttribute('disabled', 'disabled');
       this.passButtonElement.classList.remove('disabled');
-      this.passImage.src = "/images/small-arrow.png";
+      this.passImage.src = "./images/small-arrow.png";
       this.passQuestionElements.style.cursor = 'default';
     }
 
