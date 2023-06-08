@@ -14,6 +14,10 @@ export class Router {
     this.profileElement = document.getElementById('profile');
     this.profileFullNElement = document.getElementById('profile-full-name');
 
+    const currentYear = new Date().getFullYear();
+    const yearElement = document.querySelector('.current-year');
+    yearElement.textContent = currentYear.toString();
+
     this.routes = [
       {
         route: '#/',
