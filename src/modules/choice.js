@@ -44,7 +44,7 @@ export class Choice {
         choiceOptionArrowElement.className = 'choice-option-arrow';
 
         const choiceOptionImageElement = document.createElement('img');
-        choiceOptionImageElement.setAttribute('src', '/images/arrow.png');
+        choiceOptionImageElement.setAttribute('src', './images/arrow.png');
         choiceOptionImageElement.setAttribute('alt', 'Arrow');
 
         choiceOptionArrowElement.appendChild(choiceOptionImageElement);

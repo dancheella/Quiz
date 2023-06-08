@@ -152,7 +152,7 @@ export class Test {
   chooseAnswer() {
     this.nextButtonElement.removeAttribute('disabled');
     this.passButtonElement.classList.add('disabled');
-    this.passImage.src = "/images/small-arrow-grey.png";
+    this.passImage.src = "./images/small-arrow-grey.png";
     this.passQuestionElements.style.cursor = 'not-allowed';
   }
 
