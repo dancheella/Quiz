@@ -1,11 +1,21 @@
-import {Form} from "./modules/form.js";
-import {Choice} from "./modules/choice.js";
-import {Test} from "./modules/test.js";
-import {Result} from "./modules/result.js";
-import {Answer} from "./modules/answer.js";
-import {Auth} from "./services/auth.js";
+import {Form} from "./modules/form";
+import {Choice} from "./modules/choice";
+import {Test} from "./modules/test";
+import {Result} from "./modules/result";
+import {Answer} from "./modules/answer";
+import {Auth} from "./services/auth";
+import {RouteType} from "./types/route.type";
+import {UserInfoType} from "./types/user-info.type";
 
 export class Router {
+  readonly contentElement: HTMLElement | null;
+  readonly stylesElement: HTMLElement | null;
+  readonly titleElement: HTMLElement | null;
+  readonly profileElement: HTMLElement | null;
+  readonly profileFullNElement: HTMLElement | null;
+
+  private routes: RouteType[];
+
   constructor() {
 
     this.contentElement = document.getElementById('content');
@@ -14,9 +24,12 @@ export class Router {
     this.profileElement = document.getElementById('profile');
     this.profileFullNElement = document.getElementById('profile-full-name');
 
-    const currentYear = new Date().getFullYear();
-    const yearElement = document.querySelector('.current-year');
-    yearElement.textContent = currentYear.toString();
+    const currentYear: number = new Date().getFullYear();
+    const yearElement: HTMLElement | null = document.querySelector('.current-year');
+
+    if (yearElement) {
+      yearElement.textContent = currentYear.toString();
+    }
 
     this.routes = [
       {
@@ -84,15 +97,19 @@ export class Router {
     ]
   }
 
-  async openRote() {
-    const urlRoute = window.location.hash.split('?')[0];
+  public async openRote(): Promise<void> {
+    const urlRoute: string = window.location.hash.split('?')[0];
     if (urlRoute === '#/logout') {
-      Auth.logout();
-      window.location.href = '#/';
-      return;
+      const result: boolean = await Auth.logout();
+      if (result) {
+        window.location.href = '#/';
+        return;
+      } else {
+        // ...
+      }
     }
 
-    const newRoute = this.routes.find(item => {
+    const newRoute: RouteType | undefined = this.routes.find(item => {
       return item.route === urlRoute;
     });
 
@@ -101,12 +118,22 @@ export class Router {
       return;
     }
 
+    if (!this.contentElement || !this.stylesElement
+      || !this.titleElement || !this.profileElement || !this.profileFullNElement) {
+      if (urlRoute === '#/') {
+        return
+      } else {
+        window.location.href = '#/';
+        return;
+      }
+    }
+
     this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
     this.stylesElement.setAttribute('href', newRoute.styles);
     this.titleElement.innerText = newRoute.title;
 
-    const userInfo = Auth.getUserInfo();
-    const accessToken = localStorage.getItem(Auth.accessTokenKey);
+    const userInfo: UserInfoType | null = Auth.getUserInfo();
+    const accessToken: string | null = localStorage.getItem(Auth.accessTokenKey);
     if (userInfo && accessToken) {
       this.profileElement.style.display = 'flex';
       this.profileFullNElement.innerText = userInfo.fullName;

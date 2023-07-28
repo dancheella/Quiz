@@ -1,6 +1,6 @@
-# SPA application Quiz
+# Quiz
 
-This SPA application Quiz was generated on pure JavaScript.
+This application Quiz was generated on TypeScript.
 ### Backend launch:
 ```sh
 cd backend
