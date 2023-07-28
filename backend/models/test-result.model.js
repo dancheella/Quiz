@@ -20,7 +20,7 @@ class TestResultModel {
         return testResults({test_id: parseInt(id), user_id: parseInt(userId)}).first();
     }
 
-    static async findByUserId(userId) {
+    static async    findByUserId(userId) {
         const models = testResults({user_id: parseInt(userId)}).get();
         return models.map(item => ({
             score: item.score,
